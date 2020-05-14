@@ -6,7 +6,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY_URI=749922590358.dkr.ecr.us-east-1.amazonaws.com/springapp
+      - REPOSITORY_URI=749922590358.dkr.ecr.us-east-1.amazonaws.com/myapp_repo
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
@@ -21,6 +21,8 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - printf '[{"imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
+      - echo Writing imagedefinitions.json file...
+      - printf '[{"name":"your.task.definition.name","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - cat imagedefinitions.json
 artifacts:
-  files: imageDetail.json
+  files: imagedefinitions.json
