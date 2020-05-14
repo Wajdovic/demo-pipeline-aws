@@ -19,4 +19,9 @@ public class controller{
         }
     }
 
+    @GetMapping("/crash")
+    public void crash(){
+        System.exit(-1);
+    }
+
 }
