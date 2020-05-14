@@ -12,7 +12,7 @@ public class controller{
     public String test(){
         try{
             InetAddress localhost = InetAddress.getLocalHost();
-            return "Wajdi Testing #---# " + localhost.getHostAddress();
+            return "Wajdi Testing #--!--# " + localhost.getHostAddress();
         }
         catch (Exception e){
             return "Something went wrong!";
